@@ -78,16 +78,52 @@ npm install
 npm run build
 ```
 
-## Claude Desktop / Cursor Config
+## Running in Claude Desktop
 
-Add to your `claude_desktop_config.json` (or equivalent):
+### Step 1 — Prerequisites
 
+- [Node.js 18+](https://nodejs.org/) installed
+- [Claude Desktop](https://claude.ai/download) installed
+- A running Pega instance (8.3–8.6, section-based UI)
+
+---
+
+### Step 2 — Clone & Build
+
+```bash
+git clone https://github.com/alamaticz/Pega-DX-API-v1-MCP.git
+cd Pega-DX-API-v1-MCP
+npm install
+npm run build
+```
+
+After the build, a `dist/index.js` file will be created. Note the **full absolute path** to this file — you'll need it in the next step.
+
+- **Windows example:** `C:\Users\YourName\Pega-DX-API-v1-MCP\dist\index.js`
+- **macOS / Linux example:** `/Users/yourname/Pega-DX-API-v1-MCP/dist/index.js`
+
+---
+
+### Step 3 — Edit Claude Desktop Config
+
+Open the Claude Desktop configuration file in a text editor:
+
+| OS | Config file location |
+|----|----------------------|
+| **Windows** | `%APPDATA%\Claude\claude_desktop_config.json` |
+| **macOS** | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+
+If the file does not exist, create it.
+
+Add the following (replace the `args` path and credentials with your own values):
+
+**Windows:**
 ```json
 {
   "mcpServers": {
     "pega-dx-v1": {
       "command": "node",
-      "args": ["/absolute/path/to/pega-dx-v1-mcp/dist/index.js"],
+      "args": ["C:\\Users\\YourName\\Pega-DX-API-v1-MCP\\dist\\index.js"],
       "env": {
         "PEGA_BASE_URL": "https://your-server.pegacloud.net/prweb",
         "PEGA_USERNAME": "your_operator_id",
@@ -97,6 +133,43 @@ Add to your `claude_desktop_config.json` (or equivalent):
   }
 }
 ```
+
+**macOS / Linux:**
+```json
+{
+  "mcpServers": {
+    "pega-dx-v1": {
+      "command": "node",
+      "args": ["/Users/yourname/Pega-DX-API-v1-MCP/dist/index.js"],
+      "env": {
+        "PEGA_BASE_URL": "https://your-server.pegacloud.net/prweb",
+        "PEGA_USERNAME": "your_operator_id",
+        "PEGA_PASSWORD": "your_password"
+      }
+    }
+  }
+}
+```
+
+> **Note:** If you already have other MCP servers in the config, add the `"pega-dx-v1"` block inside the existing `"mcpServers"` object — do not create a second `"mcpServers"` key.
+
+---
+
+### Step 4 — Restart Claude Desktop
+
+Fully quit and reopen Claude Desktop. The Pega MCP tools will appear in the tools panel (hammer icon).
+
+---
+
+### Step 5 — Verify Connection
+
+In a new Claude conversation, ask:
+
+> *"Ping my Pega service"*
+
+Claude will call `ping_pega_service` and confirm connectivity. If it fails, double-check your `PEGA_BASE_URL`, credentials, and that your Pega server is reachable from your machine.
+
+---
 
 ## Development (no build)
 
