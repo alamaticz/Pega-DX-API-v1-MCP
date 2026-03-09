@@ -1,0 +1,29 @@
+{
+  "name": "pega-dx-v1-mcp",
+  "version": "1.0.0",
+  "description": "MCP Server for Pega Traditional DX API V1 (section-based UI / UI-Kit / Theme Cosmos)",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "pega-dx-v1-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "lint": "eslint src/**/*.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "axios": "^1.7.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
